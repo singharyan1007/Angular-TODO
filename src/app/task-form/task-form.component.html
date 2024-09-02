@@ -1,0 +1,68 @@
+<div class="container mt-5">
+    <h2 class="text-center mb-4">{{ isEditMode ? 'Edit Task' : 'Add New Task' }}</h2>
+    
+    <form #taskForm="ngForm" (ngSubmit)="onSubmit()" class="needs-validation" novalidate>
+      <div class="mb-3">
+        <label for="title" class="form-label">Title</label>
+        <input
+          type="text"
+          id="title"
+          class="form-control"
+          [(ngModel)]="task.title"
+          name="title"
+          required
+          minlength="3"
+          #title="ngModel"
+          [class.is-invalid]="title.invalid && title.touched"
+        />
+        <div *ngIf="title.invalid && title.touched" class="invalid-feedback">
+          <div *ngIf="title.errors?.['required']">Title is required.</div>
+          <div *ngIf="title.errors?.['minlength']">Title must be at least 3 characters long.</div>
+        </div>
+      </div>
+  
+      <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <textarea
+          id="description"
+          class="form-control"
+          rows="3"
+          [(ngModel)]="task.description"
+          name="description"
+          required
+          #description="ngModel"
+          [class.is-invalid]="description.invalid && description.touched"
+        ></textarea>
+        <div *ngIf="description.invalid && description.touched" class="invalid-feedback">
+          Description is required.
+        </div>
+      </div>
+  
+      <div class="mb-3">
+        <label for="dueDate" class="form-label">Due Date</label>
+        <input
+          type="date"
+          id="dueDate"
+          class="form-control"
+          [(ngModel)]="task.dueDate"
+          name="dueDate"
+          required
+          #dueDate="ngModel"
+          [class.is-invalid]="dueDate.invalid && dueDate.touched"
+        />
+        <div *ngIf="dueDate.invalid && dueDate.touched" class="invalid-feedback">
+          Due date is required.
+        </div>
+      </div>
+  
+    
+  
+      <button type="submit" class="btn btn-primary" [disabled]="taskForm.invalid">
+        {{ isEditMode ? 'Update Task' : 'Add Task' }}
+      </button>
+      <button type="button" class="btn btn-secondary" (click)="cancel()">
+        Cancel
+      </button>
+    </form>
+  </div>
+  

@@ -1,0 +1,54 @@
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Task List</h2>
+  
+    <div class="row mb-3">
+      <div class="col text-end">
+        <button class="btn btn-primary" (click)="createTask()">Add New Task</button>
+      </div>
+    </div>
+  
+    <div class="table-responsive">
+      <table class="table table-striped table-bordered">
+        <thead class="table-dark">
+          <tr>
+            <th>#</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Due Date</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let task of tasks; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ task.title }}</td>
+            <td>{{ task.description }}</td>
+            <td>{{ task.dueDate | date:'shortDate' }}</td>
+            <td>
+              <span
+                class="badge"
+                [ngClass]="{
+                  'bg-success': task.isCompleted,
+                  'bg-warning': !task.isCompleted
+                }"
+              >
+                {{ task.isCompleted ? 'Completed' : 'Pending' }}
+              </span>
+            </td>
+            <td>
+              <button class="btn btn-info btn-sm me-2" (click)="editTask(task.id)">Edit</button>
+              <button class="btn btn-danger btn-sm me-2" (click)="deleteTask(task.id)">Delete</button>
+              <button
+                class="btn btn-secondary btn-sm"
+                (click)="toggleTaskCompletion(task.id)"
+              >
+                {{ task.isCompleted ? 'Mark as Pending' : 'Mark as Completed' }}
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  
